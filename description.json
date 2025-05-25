@@ -1,0 +1,242 @@
+[
+	{
+		"Adventure":	"Mau melakukan suatu hal yang beru dan memiliki jiwa petualang",
+		"Animated":	"Penuh kehidupan, sering menggunakan isyarat tangan, lengan, dan wajah",
+		"Adaptable":	"Mudah menyesuaikan diri dan tenang dalam setiap situasi",
+		"Analytical":	"Suka meneliti dan menylidiki bagian-bagian yang saling berhubungan"
+	},
+	{
+		"Argumentative":	"Suka berdebat karena ingin mempertahankan kebenaran, tidak peduli situasinya",
+		"Angered Easily":	"Seperti anak kecil, Mudah ngambek dan berbuat secara berlebihan",
+		"Aimless":	"Tidak memiliki tujuan sendiri, bekerja atas dasar oranglain",
+		"Alienated":	"Mudah merasa tesaing, sering karena rasa tidak aman dalam lingkungan"
+	},
+	{
+		"Bold":	"Tidak kenal takut, berani, terus terang, suka mengambil resiko",
+		"Bouncy":	"Kepribadian yang penuh semangat hidup, penuh tenaga, kadang berlebihan",
+		"Balanced":	"Kepribadian yang stabil dan seimbang, serta selalu memilih jalan tengah",
+		"Behaved":	"Secara konsisten ingin membawa dirinya di dalam suatu standart khusus"
+	},
+	{
+		"Bossy":	"Suka memerintah, mendominasi, kadang-kadang mengesalkan",
+		"Brassy":	"SUka pamer, berpenampilan mencolok, kalau berbicara suaranya keras",
+		"Blank":	"Muka datar, hanya sedikit memperlihatkan ekspresi wajah dan emosi",
+		"Bashful":	"Menghindari perhatian, cenderung menutup diri akibat rasa malu"
+	},
+	{
+		"Confident":	"Percaya diri dan yakin akan kemampuan dan suksesnya sendiri",
+		"Cheerful":	"Memiliki semangat yang tinggi dan mempromosikan kebahagiaan",
+		"Consistent":	"Memiliki keseimbangan secara emosional, stabil dan konsisten",
+		"Cultured":	"Tertarik pada sesuatu yang bernilai seni, artistik dan intelektual"
+	},
+	{
+		"Critical":	"Suka mengevaluasi sesuatu, membuat penilaian, banyak berfikir",
+		"Compromising":	"Menghidari konflik dan memilih mengalah demi menjaga perdamian",
+		"Changeable":	"Suka berubah-ubah pendirian, mudah berubah fokusnya",
+		"Crafty":	"Cerdik, Licik, Selalu menemukan cara untuk mencapai tujuannya sendiri"
+	},
+	{
+		"Chartmaker":	"Suka menciptakan solusi, senang membuat grafik, daftar dan hitungan",
+		"Contented":	"Mudah puas dengan apa yang dimiliki, jarang iri hati, ikhlas",
+		"Cute":	"Menarik, dicintai, dan sering menjadi pusat perhatian",
+		"Chief":	"Suka memegang kepemimpinan dan mengharapkan orang lain mengikutinya"
+	},
+	{
+		"Considerate":	"Menghargai keperluan dan memperhitungkan keinginan orang lain",
+		"Controlled":	"Mempunyai perasaan emosional tetapi jarang memperlihatkannya",
+		"Convincing":	"Bisa merebut hati orang melalui pesona kepribadiannya",
+		"Competitive":	"Mengubah setiap situasi menjadi persaingan untuk di menangkan"
+	},
+	{
+		"Depressed":	"Mudah merasa tertekan dan sterss, bahkan karena hal kecil sekalipun",
+		"Doubtful":	"Peragu, kurang memiliki keyakinan bahwa sesuatu hal akan berhasil",
+		"Disorganized":	"Tidak mampu bekerja secara rapi dan terstruktur, berantakan",
+		"Domineering":	"Suka mendominasi atau memaksa orang lain menuruti perintahnya"
+	},
+	{
+		"Dry Humor":	"Memiliki kemampuan sarkastis/ menyindir dalam percakapan",
+		"Deep":	"Mendalam, biasanya memahami sesuatu dan banyak mendengarkan",
+		"Demonstrative":	"Terus terang, blak-balkan dalam berkata maupun bertindak",
+		"Decisive":	"Mampu menilai dan memutuskan secara cepat atas segala sesuatu"
+	},
+	{
+		"Daring":	"Bersedia mengambil resiko, berani dalam bertindak ataupun berubah",
+		"Delightful":	"Orang yang menyenangkan sebagai teman, ramah dan aktif bersosialisasi",
+		"Diplomatic":	"Mampu mencari jalan tengah atas setiap masalah yang ada",
+		"Detailed":	"Melakukan segalanya secara berurutan, rinci dan detail dalam prosesnya"
+	},
+	{
+		"Forceful":	"Mendominasi, menyebabkan orang lain ragu untuk melawannya",
+		"Funny":	"Punya rasa humor yang cemerlang bisa membuat cerita apa saja menjadi menarik",
+		"Friendly":	"Orang yang menyenangkan, namun jarang  memulai percakapan",
+		"Faithful":	"Konsisten, bisa diandalkan, teguh, dan setia pada pendirian"
+	},
+	{
+		"Frank":	"Langsung, blak-blakan, tidak sungkan mengungkapkan pikirannnya",
+		"Forgetful":	"Kurang disiplin, tidak mengingat detail dan cenderung mengabaikan rincian",
+		"Fearful":	"Sering mengalami perasaan khwatir, takut akan hal baru dan perubahan",
+		"Fussy":	"Suka mempersoalkan hal rinci yang bahkan kadang tidak penting"
+	},
+	{
+		"Headstrong":	"Bersikeras memaksa caranya sendiri, keras kepala",
+		"Haphazard":	"Tidak punya cara yang konsisten untuk melakukan banyak hal",
+		"Hesitant":	"Lambat dalam bergerak, tidak suka terlibat, harus di arahkan",
+		"Hard To Please":	"Memiliki standar tinggi sehingga orang lain sulit memuaskannya"
+	},
+	{
+		"Independent":	"Mandiri, penuh kepercayaan diri, dan tidak begitu memerlukan bantuan",
+		"Inspiring":	"Mendorong orang lain bergabung, terlibat dan membuatnya menyenangkan",
+		"Inoffensive":	"Tidak ingin membuat orang lain kecewa dan menyakiti perasaannya",
+		"Idealistic":	"Suka kesempurnaan, selalu memenuhi target dan standar"
+	},
+	{
+		"Insecure":	"Merasa tidak aman, merasa sedih, atau kurang kepercayaan diri",
+		"Indecisive":	"Orang yang merasa sulit membuat keputusannya sendiri, perlu bantuan",
+		"Interrupts":	"Lebih suka bicara dari pada mendengarkan, suka memotong pembicaraan",
+		"Impatient":	"Tidak sabaran, tidak suka menunggu, ingin segala sesuatunya cepat"
+	},
+	{
+		"Introvert":	"Suka menyalahkan diri sendiri, banyak melakukan self-talking",
+		"Indifferent":	"Suka menyepelekan, merasa bahwa kebanyakan hal tidak penting",
+		"Inconsistent":	"Tidak konsisten, tindakan dan emosi yang tidak bedasarkan logika",
+		"Intolerant":	"Tidak mudah menerima sikap, pandangan, atau cara orang lain"
+	},
+	{
+		"Loyal":	"Setia kepada seseorang, gagasan, atau pekerjaan yang sudah di putuskan",
+		"Listener":	"Pendengar yang baik, menyimak apa yang di katakan oleh orang lain",
+		"Lively":	"Penuh semangat hidup, memiliki energi yang besar dan banyak aktifitas",
+		"Leader":	"Suka memberikan pengarahan, suka memimpin orang lain melakukan sesuatu"
+	},
+	{
+		"Loner":	"Cenderung suka menghindari orang lain dan suka menyendiri",
+		"Lazy":	"Malas, suka menilai pekerjaan dari berapa banyak tenaga yang harus dikeluarkan",
+		"Loud":	"Suka tertawa tebahak-bahak atau bersuara keras melebihi orang lain",
+		"Lord Over":	"Suka mengatakan kepada orang lain bahwa dia benar dan memegang kendali"
+	},
+	{
+		"Musical":	"Memiliki selera musik dan artistik yang baik, menghargai karya seni",
+		"Mediator":	"Konsisten merukunkan pertikaian supaya bisa menghindari konflik",
+		"Mixes Easily":	"Menyukai tempat ramai, tidak pernah menganggap orang lain asing",
+		"Mover":	"Terdorong untuk selalu produktif, suka bekerja, merasa sulit duduk diam"
+	},
+	{
+		"Manipulative":	"Bisa bekerja dengan penuh tipu muslihat demi keuntungan pribadi",
+		"Messy":	"Hidup dalam keadaan tidak teratur, bebas dan cenderung berantakan",
+		"Mumbles":	"Selalu bicara pelan jika didesak, memiliki nada bicara yang kurang jelas",
+		"Moody":	"Mudah terpengaruh suasana hati, selalu memiliki semangat yang rendah"
+	},
+	{
+		"Nervy":	"Penuh keyakinan, semangat, dan keberanian, tetapi untuk dirinya sendiri",
+		"Naive":	"Kurang dewasa, Kekanak-kanakan, dan kurang bijaksana memandang kehidupan",
+		"Nonchalant":	"Masa bodoh, tidak peduli, tapi mudah menyesuaikan diri dengan orang lain",
+		"Negative Attitude":	"Selalu negatif, sering melihat sisi buruk atau gelap dari setiap situasi"
+	},
+	{
+		"Outspoken":	"Bicara terang-terangan dan tanpa menahan diri, kadang terdengar kasar",
+		"Optimistic":	"Periang dan mampu meyakinkan orang lain bahwa segalanya akan beres",
+		"Obliging":	"Bisa menyesuaikan diri, mampu melakukan sesuatu dengan cara oranglain",
+		"Orderly":	"Suka membuat segalanya menjadi benar, metodis dan sistematis"
+	},
+	{
+		"Proud":	"Bangga terhadap diri sendiri, punya harga diri tinggi, menganggap diri selalu benar",
+		"Permissive":	"Memperbolehkan oranglain melakukan apa saja untuk membuatnya di sukai",
+		"Plain":	"Memiliki kepribadian di tengah-tengah, dan tidak memperlihatkan banyak emosi",
+		"Pessimistic":	"Pesimis dalam melihat segala situasi, kurang bersemangat"
+	},
+	{
+		"Persuasive":	"Mampu meyakinkan orang untuk melakukan apa yang diinginkannya",
+		"Playful":	"Penuh dengan kesenangan sendiri, senang bermain-main dan humoris",
+		"Peaceful":	"Tampak tidak terganggu dan tenang, serta menghindari setiap kekacauan",
+		"Persistent":	"Melakukan sesuatu sampai selesai sebelum memulai lainnya"
+	},
+	{
+		"Planner":	"Mempersiapkan aturan-aturan yang terinci sebelum menyelesaikan proyek",
+		"Patient":	"Tidak terpengaruh oleh penundaan, teteap tenang dan toleran",
+		"Promoter":	"Mendorong atau memaksa orang lain mengikuti dan bergabung",
+		"Positive":	"Selalu punya keyakinan dan kepastian atas diri dan tujuannya"
+	},
+	{
+		"Perfectionist":	"Memiliki standar tinggi pada dirinya dan sering menempatkan pada orang lain",
+		"Pleasant":	"Suka menyenangkan orang lain, bisa di ajak bekerjasama dan mudah diajak bicara",
+		"Popular":	"Orang yang di kenal karena ramah, murah senyum dan mudah bergaul",
+		"Productive":	"Harus terus-menerus bekerja dan mencapai sesuatu, merasa sulit beristirahat"
+	},
+	{
+		"Revengeful":	"Mengingat kesalahan oranglain, menyimpan dendam",
+		"Reluctant":	"Tidak suka terlibat dan malas bergerak untuk mengeluarkan energi",
+		"Restless":	"Selalu mencari kegiatan baru dan tidak suka mengerjakan pekerjaan rutin",
+		"Rash":	"Tidak sabaran dan suka betindak dengan tergesa-gesa tanpa memikirkan dahulu"
+	},
+	{
+		"Respectful":	"Memperlakukan orang lain dengan rasa segan, hormat, dan penghargaan",
+		"Reserved":	"Suka memendam perasaannya sendiri, tidak mau menyampaikan pendapat",
+		"Refreshing":	"Menyegrakan suasana, dapat membuat energi baru dalam lingkungan",
+		"Resourceful":	"Bisa bertindak cepat dan efektif dalam segala situasi, efisien dan produktif"
+	},
+	{
+		"Resentful":	"Sering memendam, memiliki perasaan tidak senang & mudah tersinggung",
+		"Reticent":	"TIdak besedia, menolak ikut terlibat terutama kalau sesuatu yang rumit",
+		"Repetitious":	"Suka menceritakan kembali kisah secara berulang-ulang tanpa sadar",
+		"Resistant":	"Berjuang, gigih dalam berusaha, bekerja dengan caranya sendiri"
+	},
+	{
+		"Strong Willed":	"Berpendirian kuat, berkemauan keras, sulit dipatahkan pendapatnya",
+		"Sociable":	"Suka bersosialisasi, menganggap oranglain adalah kesempatan baik",
+		"Submissive":	"Dengan mudah menerima pandangan atau keinginan orang lain",
+		"Self Sacrificing":	"Bersedia mengorbankan dirinya demi sesuatu yang berarti baginya"
+	},
+	{
+		"Stubborn":	"Suka memaksakan kehendak sendiri, keras kepala, tidak mudah dibujuk",
+		"Show Off":	"Suka menjadi pusat perhatian, ingin dilihat baik dan suka pamer",
+		"Slow":	"Lamban dalam betindak atau berpikir, terlalu banyak menunggu",
+		"Skeptical":	"Tidak mudah percaya, selalu mempertanyakan motif dibalik setiap perkataan"
+	},
+	{
+		"Self Reliant":	"Mandiri sepenuhnya mengandalkan kemampuan dan daya sendiri",
+		"Spirited":	"Penuh semangat hidup dan gairah dalam segala tindakannya",
+		"Satisfied":	"Orang yang mudah menerima keadaan atau situasi apa saja",
+		"Sensitive":	"Peka terhadap perasaan sendiri dan orang lain"
+	},
+	{
+		"Short Tempered":	"Mudah marah, terlebih apabila orang lain tidak menyelesaikan pekerjaan",
+		"Scatterbrained":	"Sulit berkonsentrasi, pikirannya selalu berubah-ubah, mudah teralihkan",
+		"Sluggish":	"Lambat dalam memulai pekerjaan dan selalu perlu dorongan untuk termotivasi",
+		"Suspicious":	"Cenderung mencurigai atau tidak mempercayai gagasan orang lain"
+	},
+	{
+		"Sure":	"Selalu percaya diri, tidak ragu-ragu atau bimbang dalam memutuskan",
+		"Spontaneous":	"Menyukai kehidupan yang bersifat langsung, tidak terencana dan alami",
+		"Shy":	"Pendiam, tidak mudah terseret kedalam percakapan, perlu di ajak",
+		"Scheduled":	"Semua serba terjadwal, tidak suka jika rencananya terganggu"
+	},
+	{
+		"Too Sensitive":	"Terlalu sensitif dan mudah tersinggung kalau disalahpahami",
+		"Timid":	"Mundur jika bertemu situasi sulit, mudah menyerah di situasi yang tidak baik",
+		"Talkated":	"Suka berbicara serta sulit mendengarkan orang lain",
+		"Tactless":	"Suka menyinggung perasaan orang lain serta kurang pertimbangan atau empati"
+	},
+	{
+		"Thoughtful":	"Cepat tanggap dan selalu mengingat hal-hal penting dengan baik",
+		"Tolerant":	"Menerima pendapat orang lain, atau cara-cara tanpa mengubahnya",
+		"Talker":	"Terus-menerus bicara, biasanya menceritakan kisah lucu dan menghibur",
+		"Tenacious":	"Berpendirian teguh, keras kepala, dan tidak mau melepaskan sampai tujuan"
+	},
+	{
+		"Unforgiving":	"Sulit memaafkan dan melupakan sakit hati atau ketidakadilan, pendendam",
+		"Unenthusiastic":	"Cenderung tidak bergairah, sering merasa tidak akan berhasil",
+		"Undisciplined":	"Kurang disiplin, tidak teratur, hampir di semua sisi kehidupannya",
+		"Unsympathetic":	"Merasa sulit mengenali masalah, sering menyakiti perasaan orang lain"
+	},
+	{
+		"Unpopular":	"Menuntut kesempurnaan, sehingga dapat membuat oranglain menjauhinya",
+		"Unaffectionate":	"Sulit mengekspresikan perasaannya secara terbuka",
+		"Unpredictable":	"Mudah berubah semangatnya, melupakan janji yang sudah di ucapkan",
+		"Uninvolved":	"Tidak punya keinginan untuk mendegarkan pendapat oranglain"
+	},
+	{
+		"Withdrawn":	"Suka menarik diri dari lingkungan atau suka mengasingkan diri",
+		"Worrier":	"Memiliki banyak kekhawatiran akan segala sesuatu",
+		"Wants Credit":	"Merasa senang mendapat penghargaan atau persetujuan orang lain",
+		"Workaholic":	"Selalu suka bekerja melebihi batas norma, bersalah kalau berisitirahat"
+	}
+]

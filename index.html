@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DISC Profile Test</title>
+  <style>
+    body { 
+      font-family: sans-serif; 
+      background: #f4f4f4; 
+      padding: 20px !important; 
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .guide {
+      background: #fff; 
+      padding: 20px; 
+      box-shadow: 0 2px 2px rgba(0,0,0,0.1); 
+      box-sizing: border-box; 
+      border-radius: 10px; 
+      margin-bottom: 30px;
+    }
+    .guideItem {
+      display: flex;
+      margin-top: 6px;
+    }
+    .guideItem > div:first-child {
+      white-space: nowrap;
+      margin-right: 10px;
+    }
+    .group { 
+      background: #fff; 
+      margin-left: 64px;
+      margin-bottom: 20px; 
+      padding: 15px; 
+      border-radius: 10px; 
+      border-top-left-radius: 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+      box-sizing: border-box; 
+      position: relative;
+    }
+    .group:before {
+      content: attr(data-group);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 60px;
+      height: 60px;
+      position: absolute;
+      background: #fff;
+      color: #000;
+      font-size: 28px;
+      font-weight: 700;
+      left: -60px;
+      top: 0;
+      border-radius: 10px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    .item { margin-bottom: 15px; }
+    .label { font-weight: bold; }
+    .desc { font-size: 0.9em; margin: 5px 0; color: #555; }
+    .btns button {
+      margin-right: 10px;
+      padding: 6px 12px;
+      border-radius: 5px;
+      background: #fff;
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+    .like { border: 1px solid #4CAF50; color: #4CAF50; }
+    .dislike { border: 1px solid #F44336; color: #F44336; }
+    .like:hover, .like.selected { background: #4CAF50; color: #fff; }
+    .dislike:hover, .dislike.selected { background: #F44336; color: #fff; }
+    .selected { box-shadow: 0 0 0 2px #fff inset; }
+    #submitContainer {
+      display: flex;
+      justify-content: center;
+      margin-top: 60px;
+    }
+    #submitBtn, #testBtn {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #testBtn {
+      background: orange;
+      display: none;
+      margin-left: 10px;
+    }
+    .invalid {
+      border-top: 1px solid red;
+      box-shadow: 0 2px 2px red;
+    }
+    .invalid.group:before {
+      top: -1px;
+      border: 1px solid red;
+      border-right: 0;
+    }
+    .graph {
+      position: relative;
+    }
+    .graph > table {
+      width: 500px;
+      flex-grow: 1;
+    }
+    .graph > table tr:first-child > th {
+      white-space: nowrap;
+      padding: 12px;
+      border: 1px solid #d3d3d3;
+    }
+    .graph > table th {
+      width: 70px;
+    }
+    .graph > table tr th:first-child:only-of-type {
+      border: 1px solid #d3d3d3;
+      background: #ddd;
+    }
+    .graph > table td {
+      border: 1px solid #d3d3d3;
+      width: 40px;
+      height: 16px;
+      font-size: 12px;
+      text-align: center;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      background: red;
+      border-radius: 50%;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+  </style>
+  <style>
+    .hystmodal__window {
+      padding: 48px;
+      padding-top: 24px;
+      border-radius: 10px;
+    }
+    .hystmodal__window.hystmodal__window--long {
+      width: 1000px;
+    }
+    .graph {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .explanation {
+      flex-grow: 1;
+    }
+    .explanation > div {
+      background: #f3f3f3;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .explanation table th {
+      text-align: right;
+    }
+  </style>
+  <style>
+    .warning-box, .info-box {
+      border-left: 4px solid #f59e0b;
+      background-color: #fef3c7;
+      /* color: #92400e; */
+      padding: 10px 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      max-width: 100%;
+      margin: 10px auto;
+    }
+    .info-box {
+      border-color: #4faec4;
+      background-color: #d9f8ff;
+      color: #000;
+    }
+    #warning-toggle, #info-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      padding: 0;
+    }
+    .warning-content, .info-content {
+      margin-top: 10px;
+      display: none;
+    }
+    .warning-content, .info-content pre {
+      background: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      white-space: pre-line;
+    }
+    .warning-content h4 {
+      font-size: 14px;
+    }
+    .rotate {
+      transform: rotate(90deg);
+      transition: transform 0.2s ease;
+    }
+    .rotate.down {
+      transform: rotate(0deg);
+    }
+  </style>
+  <script src="./hystmodal.min.js"></script>
+  <script src="./clipboard.min.js"></script>
+  <link rel="stylesheet" href="./hystmodal.min.css">
+</head>
+<body>
+
+<h1>DISC Profile Test</h1>
+  
+<div class="guide">
+  <h3 style="margin-top: 0">Panduan Singkat</h3>
+  <div class="guideItem">
+    <div>
+      <strong>Langkah 1</strong>
+    </div>
+    <div>
+      Baca setiap pernyataan dengan baik
+    </div>
+  </div>
+  <div class="guideItem">
+    <div>
+      <strong>Langkah 2</strong>
+    </div>
+    <div>
+      Pada setiap kelompok, silahkan pilih satu dari empat kalimat yang <b>PALING</b> mewakili sifat anda, tandai dengan <em>Most Relevant</em>
+    </div>
+  </div>
+  <div class="guideItem">
+    <div>
+      <strong>Langkah 3</strong>
+    </div>
+    <div>
+      Silahkan pilih satu lagi kalimat yang <b>KURANG</b> mewakili sifat anda, tandai dengan <em>Least Relevant</em>
+    </div>
+  </div>
+</div>
+  
+<div id="restore-info" style="display: none; margin-bottom: 1rem; padding: 1rem; border-radius: 10px; border: 1px solid #ccc; background: #f9f9f9; margin-top: 20px; margin-bottom: 20px">
+  Your previous progress has been restored.
+  <button id="clear-progress" style="margin-left: 1rem;">Clear Progress</button>
+</div>
+
+<div id="testContainer"></div>
+  
+<div id="submitContainer">
+  <button id="submitBtn">Get Your Result</button>
+  <button id="testBtn">Test Hardcoded Result</button>
+</div>
+  
+<!-- Result -->
+<div class="hystmodal" id="resultModal" aria-hidden="true">
+  <div class="hystmodal__wrap">
+    <div class="hystmodal__window hystmodal__window--long" role="dialog" aria-modal="true">
+      <button data-hystclose class="hystmodal__close">Close</button>  
+      
+      <h3>Your Result</h3>
+
+      <div class="warning-box">
+        <button id="warning-toggle">
+          ⚠️ Bagaimana jika terdapat perbedaan pada Hasil Grafik?
+          <span class="arrow rotate down">▶</span>
+        </button>
+        <div id="warning-content" class="warning-content">
+          <h4 style="margin-top: 10px">Bagaimana jika grafik 1 dengan grafik 2 menunjukkan perbedaan?</h4>
+          Hal ini sebenarnya wajar dan sah-sah saja, perbedaan grafik menunjukkan bahwa kondisi diri yang adaptif berbeda dengan kondisi diri di bawah tekanan, ini berarti seseorang bisa terlihat "sangat berbeda" apabila sedang menghadapi suatu konflik daripada kondisinya yang biasa. Namun yang perlu di perhatikan adalah apabila perbedaannya cukup tajam, ini bisa menimbulkan konflik internal di dalam dirinya, ia menjadi bingung atas sifat yang ingin di tunjukan. Oleh karena itu sangat penting bagi diri kita untuk menyadari setiap perbedaan tipe perilaku yang kita miliki.
+
+          <h4>Bagaimana jika grafik 1 berbeda dengan grafik 2, namun serupa atau mirip dengan grafik 3?</h4>
+          Dalam kasus ini, berarti kita bisa menyesuaikan "diri yang sebenarnya" dengan tuntutan yang ada, ini bisa jadi kita tampil apa adanya di lingkungan sosial karena sudah nyaman dengan diri sendiri, dan tidak ada terlalu banyak hal yang perlu di sembunyikan ketika tampil di depan banyak orang. Yang berbeda adalah ketika ada di bawah tekanan, biasanya yang muncul adalah perilaku yang lebih refleks yang letaknya ada di dalam pikiran bawah sadar.
+
+          <h4>Bagaimana jika grafik 1 berbeda dari grafik 3?</h4>
+          Seseorang yang belum menunjukan siapa dirinya yang sebenarnya ketika ada di dalam situasi yang baru, biasanya ia memiliki beberapa "topeng sosial" untuk menjawab ketidaknyamannya atas perilakunya sendiri. Ia hanya akan menunjukan diri setelah lama berhubungan dengan oranglain atau hanya dengan orang yang di percayainya saja. Banyak orang yang berperilaku seperti ini, mungkin di dalamnya termasuk Anda dan Saya, dimana kita menjadi "diri yang sebenarnya" hanya dalam situasi tertentu saja.
+
+          <br><br>
+        </div>
+      </div>
+      
+      <div class="info-box">
+        <button id="info-toggle">
+          ❓ Dapatkan lebih banyak Insight
+          <span class="arrow rotate down">▶</span>
+        </button>
+        <div id="info-content" class="info-content"></div>
+      </div>
+
+      <div>
+        <h3 style="margin-top: 40px">🎭 Grafik 1: Masking (Persona/Adaptif)</h3>
+        <div id="graph1" class="graph">
+          <table id="table1">
+            <tr>
+              <th>Most Relevant (P)</th>
+              <th>D</th>
+              <th>I</th>
+              <th>S</th>
+              <th>C</th>
+            </tr>
+
+            <tr>
+              <th rowspan="3">Sangat Tinggi</th>
+              <td id="g1-0-D">40</td>
+              <td id="g1-0-I">40</td>
+              <td id="g1-0-S">40</td>
+              <td id="g1-0-C">40</td>
+            </tr>
+            <tr>
+              <td id="g1-1-D">35</td>
+              <td id="g1-1-I">35</td>
+              <td id="g1-1-S">35</td>
+              <td id="g1-1-C">35</td>
+            </tr>
+            <tr>
+              <td id="g1-2-D">30</td>
+              <td id="g1-2-I">30</td>
+              <td id="g1-2-S">30</td>
+              <td id="g1-2-C">30</td>
+            </tr>
+
+            <tr>
+              <th rowspan="5">Tinggi</th>
+              <td id="g1-3-D">25</td>
+              <td id="g1-3-I">25</td>
+              <td id="g1-3-S">25</td>
+              <td id="g1-3-C">25</td>
+            </tr>
+            <tr>
+              <td id="g1-4-D">20</td>
+              <td id="g1-4-I">20</td>
+              <td id="g1-4-S">20</td>
+              <td id="g1-4-C">20</td>
+            </tr>
+            <tr>
+              <td id="g1-5-D"></td>
+              <td id="g1-5-I"></td>
+              <td id="g1-5-S"></td>
+              <td id="g1-5-C"></td>
+            </tr>
+            <tr>
+              <td id="g1-6-D"></td>
+              <td id="g1-6-I"></td>
+              <td id="g1-6-S"></td>
+              <td id="g1-6-C"></td>
+            </tr>
+            <tr>
+              <td id="g1-7-D"></td>
+              <td id="g1-7-I"></td>
+              <td id="g1-7-S"></td>
+              <td id="g1-7-C"></td>
+            </tr>
+
+            <tr>
+              <th rowspan="4">Rata-rata</th>
+              <td id="g1-8-D">15</td>
+              <td id="g1-8-I">15</td>
+              <td id="g1-8-S">15</td>
+              <td id="g1-8-C">15</td>
+            </tr>
+            <tr>
+              <td id="g1-9-D"></td>
+              <td id="g1-9-I"></td>
+              <td id="g1-9-S"></td>
+              <td id="g1-9-C"></td>
+            </tr>
+            <tr>
+              <td id="g1-10-D"></td>
+              <td id="g1-10-I"></td>
+              <td id="g1-10-S"></td>
+              <td id="g1-10-C"></td>
+            </tr>
+            <tr>
+              <td id="g1-11-D"></td>
+              <td id="g1-11-I"></td>
+              <td id="g1-11-S"></td>
+              <td id="g1-11-C"></td>
+            </tr>
+
+            <tr>
+              <th rowspan="4">Rendah</th>
+              <td id="g1-12-D">10</td>
+              <td id="g1-12-I">10</td>
+              <td id="g1-12-S">10</td>
+              <td id="g1-12-C">10</td>
+            </tr>
+            <tr>
+              <td id="g1-13-D"></td>
+              <td id="g1-13-I"></td>
+              <td id="g1-13-S"></td>
+              <td id="g1-13-C"></td>
+            </tr>
+            <tr>
+              <td id="g1-14-D"></td>
+              <td id="g1-14-I"></td>
+              <td id="g1-14-S"></td>
+              <td id="g1-14-C"></td>
+            </tr>
+            <tr>
+              <td id="g1-15-D"></td>
+              <td id="g1-15-I"></td>
+              <td id="g1-15-S"></td>
+              <td id="g1-15-C"></td>
+            </tr>
+
+            <tr>
+              <th rowspan="6">Sangat Rendah</th>
+              <td id="g1-16-D">5</td>
+              <td id="g1-16-I">5</td>
+              <td id="g1-16-S">5</td>
+              <td id="g1-16-C">5</td>
+            </tr>
+            <tr>
+              <td id="g1-17-D"></td>
+              <td id="g1-17-I"></td>
+              <td id="g1-17-S"></td>
+              <td id="g1-17-C"></td>
+            </tr>
+            <tr>
+              <td id="g1-18-D"></td>
+              <td id="g1-18-I"></td>
+              <td id="g1-18-S"></td>
+              <td id="g1-18-C"></td>
+            </tr>
+            <tr>
+              <td id="g1-19-D"></td>
+              <td id="g1-19-I"></td>
+              <td id="g1-19-S"></td>
+              <td id="g1-19-C"></td>
+            </tr>
+            <tr>
+              <td id="g1-20-D"></td>
+              <td id="g1-20-I"></td>
+              <td id="g1-20-S"></td>
+              <td id="g1-20-C"></td>
+            </tr>
+            <tr>
+              <td id="g1-21-D">0</td>
+              <td id="g1-21-I">0</td>
+              <td id="g1-21-S">0</td>
+              <td id="g1-21-C">0</td>
+            </tr>
+          </table>
+          <canvas id="canvas1"></canvas>
+          <div class="explanation"></div>
+        </div>
+
+        <h3 style="margin-top: 40px">🔥 Grafik 2: Core (Temperamen/Di bawah tekanan) </h3>
+        <div id="graph2" class="graph">
+          <table id="table2">
+            <tr>
+              <th>Least Relevant (K)</th>
+              <th>D</th>
+              <th>I</th>
+              <th>S</th>
+              <th>C</th>
+            </tr>
+
+            <tr>
+              <th rowspan="4">Sangat Tinggi</th>
+              <td id="g2-0-D">0</td>
+              <td id="g2-0-I">0</td>
+              <td id="g2-0-S">0</td>
+              <td id="g2-0-C">0</td>
+            </tr>
+            <tr>
+              <td id="g2-1-D">3</td>
+              <td id="g2-1-I">3</td>
+              <td id="g2-1-S">3</td>
+              <td id="g2-1-C">3</td>
+            </tr>
+            <tr>
+              <td id="g2-2-D">4</td>
+              <td id="g2-2-I">4</td>
+              <td id="g2-2-S">4</td>
+              <td id="g2-2-C">4</td>
+            </tr>
+            <tr>
+              <td id="g2-3-D">5</td>
+              <td id="g2-3-I">5</td>
+              <td id="g2-3-S">5</td>
+              <td id="g2-3-C">5</td>
+            </tr>
+
+            <tr>
+              <th rowspan="5">Tinggi</th>
+              <td id="g2-4-D">6</td>
+              <td id="g2-4-I">6</td>
+              <td id="g2-4-S">6</td>
+              <td id="g2-4-C">6</td>
+            </tr>
+            <tr>
+              <td id="g2-5-D">7</td>
+              <td id="g2-5-I">7</td>
+              <td id="g2-5-S">7</td>
+              <td id="g2-5-C">7</td>
+            </tr>
+            <tr>
+              <td id="g2-6-D">8</td>
+              <td id="g2-6-I">8</td>
+              <td id="g2-6-S">8</td>
+              <td id="g2-6-C">8</td>
+            </tr>
+            <tr>
+              <td id="g2-7-D">9</td>
+              <td id="g2-7-I">9</td>
+              <td id="g2-7-S">9</td>
+              <td id="g2-7-C">9</td>
+            </tr>
+            <tr>
+              <td id="g2-8-D">10</td>
+              <td id="g2-8-I">10</td>
+              <td id="g2-8-S">10</td>
+              <td id="g2-8-C">10</td>
+            </tr>
+
+            <tr>
+              <th rowspan="5">Rata-rata</th>
+              <td id="g2-9-D">11</td>
+              <td id="g2-9-I">11</td>
+              <td id="g2-9-S">11</td>
+              <td id="g2-9-C">11</td>
+            </tr>
+            <tr>
+              <td id="g2-10-D">12</td>
+              <td id="g2-10-I">12</td>
+              <td id="g2-10-S">12</td>
+              <td id="g2-10-C">12</td>
+            </tr>
+            <tr>
+              <td id="g2-11-D">13</td>
+              <td id="g2-11-I">13</td>
+              <td id="g2-11-S">13</td>
+              <td id="g2-11-C">13</td>
+            </tr>
+            <tr>
+              <td id="g2-12-D">14</td>
+              <td id="g2-12-I">14</td>
+              <td id="g2-12-S">14</td>
+              <td id="g2-12-C">14</td>
+            </tr>
+            <tr>
+              <td id="g2-13-D">15</td>
+              <td id="g2-13-I">15</td>
+              <td id="g2-13-S">15</td>
+              <td id="g2-13-C">15</td>
+            </tr>
+
+            <tr>
+              <th rowspan="4">Rendah</th>
+              <td id="g2-14-D">20</td>
+              <td id="g2-14-I">20</td>
+              <td id="g2-14-S">20</td>
+              <td id="g2-14-C">20</td>
+            </tr>
+            <tr>
+              <td id="g2-15-D">23</td>
+              <td id="g2-15-I">23</td>
+              <td id="g2-15-S">23</td>
+              <td id="g2-15-C">23</td>
+            </tr>
+            <tr>
+              <td id="g2-16-D">25</td>
+              <td id="g2-16-I">25</td>
+              <td id="g2-16-S">25</td>
+              <td id="g2-16-C">25</td>
+            </tr>
+            <tr>
+              <td id="g2-17-D">30</td>
+              <td id="g2-17-I">30</td>
+              <td id="g2-17-S">30</td>
+              <td id="g2-17-C">30</td>
+            </tr>
+
+            <tr>
+              <th rowspan="4">Sangat Rendah</th>
+              <td id="g2-18-D">35</td>
+              <td id="g2-18-I">35</td>
+              <td id="g2-18-S">35</td>
+              <td id="g2-18-C">35</td>
+            </tr>
+            <tr>
+              <td id="g2-19-D">37</td>
+              <td id="g2-19-I">37</td>
+              <td id="g2-19-S">37</td>
+              <td id="g2-19-C">37</td>
+            </tr>
+            <tr>
+              <td id="g2-20-D">39</td>
+              <td id="g2-20-I">39</td>
+              <td id="g2-20-S">39</td>
+              <td id="g2-20-C">39</td>
+            </tr>
+            <tr>
+              <td id="g2-21-D">40</td>
+              <td id="g2-21-I">40</td>
+              <td id="g2-21-S">40</td>
+              <td id="g2-21-C">40</td>
+            </tr>
+          </table>
+          <canvas id="canvas2"></canvas>
+          <div class="explanation"></div>
+        </div>
+
+        <h3 style="margin-top: 40px">🪞 Grafik 3: Mirror (Karakter/Natural) </h3>
+        <div id="graph3" class="graph">
+          <table id="table3">
+            <tr>
+              <th>Most (P) - Least (K)</th>
+              <th>D</th>
+              <th>I</th>
+              <th>S</th>
+              <th>C</th>
+            </tr>
+
+            <tr>
+              <th rowspan="3">Sangat Tinggi</th>
+              <td id="g3-0-D">+40</td>
+              <td id="g3-0-I">+40</td>
+              <td id="g3-0-S">+40</td>
+              <td id="g3-0-C">+40</td>
+            </tr>
+            <tr>
+              <td id="g3-1-D">+35</td>
+              <td id="g3-1-I">+35</td>
+              <td id="g3-1-S">+35</td>
+              <td id="g3-1-C">+35</td>
+            </tr>
+            <tr>
+              <td id="g3-2-D">+30</td>
+              <td id="g3-2-I">+30</td>
+              <td id="g3-2-S">+30</td>
+              <td id="g3-2-C">+30</td>
+            </tr>
+
+            <tr>
+              <th rowspan="5">Tinggi</th>
+              <td id="g3-3-D">+25</td>
+              <td id="g3-3-I">+25</td>
+              <td id="g3-3-S">+25</td>
+              <td id="g3-3-C">+25</td>
+            </tr>
+            <tr>
+              <td id="g3-4-D">+20</td>
+              <td id="g3-4-I">+20</td>
+              <td id="g3-4-S">+20</td>
+              <td id="g3-4-C">+20</td>
+            </tr>
+            <tr>
+              <td id="g3-5-D">+15</td>
+              <td id="g3-5-I">+15</td>
+              <td id="g3-5-S">+15</td>
+              <td id="g3-5-C">+15</td>
+            </tr>
+            <tr>
+              <td id="g3-6-D">+10</td>
+              <td id="g3-6-I">+10</td>
+              <td id="g3-6-S">+10</td>
+              <td id="g3-6-C">+10</td>
+            </tr>
+            <tr>
+              <td id="g3-7-D">+5</td>
+              <td id="g3-7-I">+5</td>
+              <td id="g3-7-S">+5</td>
+              <td id="g3-7-C">+5</td>
+            </tr>
+
+            <tr>
+              <th rowspan="4">Rata-rata</th>
+              <td id="g3-8-D">0</td>
+              <td id="g3-8-I">0</td>
+              <td id="g3-8-S">0</td>
+              <td id="g3-8-C">0</td>
+            </tr>
+            <tr>
+              <td id="g3-9-D">-5</td>
+              <td id="g3-9-I">-5</td>
+              <td id="g3-9-S">-5</td>
+              <td id="g3-9-C">-5</td>
+            </tr>
+            <tr>
+              <td id="g3-10-D"></td>
+              <td id="g3-10-I"></td>
+              <td id="g3-10-S"></td>
+              <td id="g3-10-C"></td>
+            </tr>
+            <tr>
+              <td id="g3-11-D">-10</td>
+              <td id="g3-11-I">-10</td>
+              <td id="g3-11-S">-10</td>
+              <td id="g3-11-C">-10</td>
+            </tr>
+
+            <tr>
+              <th rowspan="4">Rendah</th>
+              <td id="g3-12-D">-15</td>
+              <td id="g3-12-I">-15</td>
+              <td id="g3-12-S">-15</td>
+              <td id="g3-12-C">-15</td>
+            </tr>
+            <tr>
+              <td id="g3-13-D">-20</td>
+              <td id="g3-13-I">-20</td>
+              <td id="g3-13-S">-20</td>
+              <td id="g3-13-C">-20</td>
+            </tr>
+            <tr>
+              <td id="g3-14-D"></td>
+              <td id="g3-14-I"></td>
+              <td id="g3-14-S"></td>
+              <td id="g3-14-C"></td>
+            </tr>
+            <tr>
+              <td id="g3-15-D">-25</td>
+              <td id="g3-15-I">-25</td>
+              <td id="g3-15-S">-25</td>
+              <td id="g3-15-C">-25</td>
+            </tr>
+
+            <tr>
+              <th rowspan="6">Sangat Rendah</th>
+              <td id="g3-16-D"></td>
+              <td id="g3-16-I"></td>
+              <td id="g3-16-S"></td>
+              <td id="g3-16-C"></td>
+            </tr>
+            <tr>
+              <td id="g3-17-D">-30</td>
+              <td id="g3-17-I">-30</td>
+              <td id="g3-17-S">-30</td>
+              <td id="g3-17-C">-30</td>
+            </tr>
+            <tr>
+              <td id="g3-18-D"></td>
+              <td id="g3-18-I"></td>
+              <td id="g3-18-S"></td>
+              <td id="g3-18-C"></td>
+            </tr>
+            <tr>
+              <td id="g3-19-D">-35</td>
+              <td id="g3-19-I">-35</td>
+              <td id="g3-19-S">-35</td>
+              <td id="g3-19-C">-35</td>
+            </tr>
+            <tr>
+              <td id="g3-20-D"></td>
+              <td id="g3-20-I"></td>
+              <td id="g3-20-S"></td>
+              <td id="g3-20-C"></td>
+            </tr>
+            <tr>
+              <td id="g3-21-D">-40</td>
+              <td id="g3-21-I">-40</td>
+              <td id="g3-21-S">-40</td>
+              <td id="g3-21-C">-40</td>
+            </tr>
+          </table>
+          <canvas id="canvas3"></canvas>
+          <div class="explanation"></div>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+</div>
+
+<script>
+/* Debounce helper */
+function debounce(func, delay) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+/* Debugging Props */
+const debuggingProps = {
+  questions: [
+    {
+      "Adventure": "Mau melakukan suatu hal yang beru dan memiliki jiwa petualang",
+      "Animated": "Penuh kehidupan, sering menggunakan isyarat tangan, lengan, dan wajah",
+      "Adaptable": "Mudah menyesuaikan diri dan tenang dalam setiap situasi",
+      "Analytical": "Suka meneliti dan menylidiki bagian-bagian yang saling berhubungan"
+    }, {
+      "Argumentative": "Suka berdebat karena ingin mempertahankan kebenaran, tidak peduli situasinya",
+      "Angered Easily": "Seperti anak kecil, Mudah ngambek dan berbuat secara berlebihan",
+      "Aimless": "Tidak memiliki tujuan sendiri, bekerja atas dasar oranglain",
+      "Alienated": "Mudah merasa tesaing, sering karena rasa tidak aman dalam lingkungan"
+    }
+  ],
+  rawResults: {
+    // Test A
+    D: { p: 3, k: 20 },
+    I: { p: 6, k: 15 },
+    S: { p: 12, k: 2 },
+    C: { p: 19, k: 3 }
+
+    // Test B
+    // D: { p: 20, k: 4 },
+    // I: { p: 10, k: 7 },
+    // S: { p: 4, k: 13 },
+    // C: { p: 6, k: 16 }
+  }
+};
+</script>
+<script>
+(function() {
+  /* Shared Props */
+  let questions = [];
+  let groups = {};
+  let results = {};
+
+  const container = document.getElementById('testContainer');
+
+  const isDebugging = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('debug') == 'true';
+  };
+
+  /* Get Data */
+  async function getQuestions() {
+    if (isDebugging()) {
+      return debuggingProps.questions;
+    }
+
+    const response = await fetch('./description.json');
+    const data = await response.json();
+
+    return data;
+  }
+  async function getQuestionGroups() {
+    const response = await fetch('./group.json');
+    const data = await response.json();
+    return data;
+  }
+
+  /* Init Form */
+  function renderQuestions(data) {
+
+    /* Restore progress */
+    const saved = JSON.parse(localStorage.getItem('discProgress'));
+    if (saved) {
+      document.getElementById('restore-info').style.display = 'block';
+      Object.assign(results, saved || {});
+    }
+
+    data.forEach((group, groupIndex) => {
+      const groupDiv = document.createElement('div');
+      groupDiv.className = 'group';
+      groupDiv.dataset.group = groupIndex + 1;
+  
+      Object.entries(group).forEach(([trait, description]) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'item';
+        itemDiv.dataset.trait = trait;
+  
+        const label = document.createElement('div');
+        label.className = 'label';
+        label.textContent = trait;
+  
+        const desc = document.createElement('div');
+        desc.className = 'desc';
+        desc.textContent = description;
+  
+        const btnContainer = document.createElement('div');
+        btnContainer.className = 'btns';
+  
+        const likeBtn = document.createElement('button');
+        likeBtn.textContent = 'Most Relevant';
+        likeBtn.className = 'like';
+        likeBtn.onclick = () => selectAnswer(groupIndex, trait, 'like', likeBtn, dislikeBtn);
+  
+        const dislikeBtn = document.createElement('button');
+        dislikeBtn.textContent = 'Least Relevant';
+        dislikeBtn.className = 'dislike';
+        dislikeBtn.onclick = () => selectAnswer(groupIndex, trait, 'dislike', dislikeBtn, likeBtn);
+  
+        btnContainer.appendChild(likeBtn);
+        btnContainer.appendChild(dislikeBtn);
+  
+        itemDiv.appendChild(label);
+        itemDiv.appendChild(desc);
+        itemDiv.appendChild(btnContainer);
+
+        // Restore selection from previous progress
+        if (saved?.[groupIndex]?.[trait] === 'like') likeBtn.classList.add('selected');
+        if (saved?.[groupIndex]?.[trait] === 'dislike') dislikeBtn.classList.add('selected');
+
+        groupDiv.appendChild(itemDiv);
+      });
+  
+      container.appendChild(groupDiv);
+    });
+  }
+
+  /* Save Form Progress */
+  const saveProgress = debounce(() => {
+    localStorage.setItem('discProgress', JSON.stringify(results));
+  }, 500);
+  /* Clear Form Progress */
+  document.getElementById('clear-progress').addEventListener('click', () => {
+    if (confirm('Apa kamu yakin?')) {
+      localStorage.removeItem('discProgress');
+      location.reload();
+    }
+  });
+
+  /* Result Modal */
+  const resultModal = new HystModal({
+    linkAttributeName: 'data-hystmodal',
+    catchFocus: false,
+    waitTransitions: true,
+    closeOnEsc: false,
+    beforeOpen: function(modal){},
+    afterClose: function(modal){},
+  });
+
+  /* Form Logic */
+  function selectAnswer(groupIndex, trait, value, selectedBtn, otherBtn) {
+    if (!results[groupIndex]) results[groupIndex] = {};
+
+    // Remove any previous selection of the same type (like or dislike)
+    const groupDiv = document.querySelector(`.group[data-group="${groupIndex + 1}"]`);
+    const prevTrait = Object.entries(results[groupIndex]).find(
+      ([_, v]) => v === value
+    )?.[0];
+
+    if (prevTrait && prevTrait !== trait) {
+      // Unselect old button in DOM
+      const oldItem = groupDiv.querySelector(`.item[data-trait="${prevTrait}"]`);
+      if (oldItem) {
+        const oldBtn = oldItem.querySelector('.'+value);
+        if (oldBtn) oldBtn.classList.remove('selected');
+      }
+      delete results[groupIndex][prevTrait];
+    }
+
+    const alreadySelected = results[groupIndex][trait] === value;
+
+    if (alreadySelected) {
+      delete results[groupIndex][trait];
+      selectedBtn.classList.remove('selected');
+    } else {
+      results[groupIndex][trait] = value;
+      selectedBtn.classList.add('selected');
+      otherBtn.classList.remove('selected');
+    }
+    
+    const selectedGroup = selectedBtn.closest('.group');
+    selectedGroup.classList.remove('invalid');
+
+    // Save on every choice
+    saveProgress();
+  }
+  function validateAndSubmit() {
+    let isValid = true;
+    document.querySelectorAll('.group').forEach((groupDiv, index) => {
+      const groupResult = results[index] || {};
+      const values = Object.values(groupResult);
+
+      const hasLike = values.includes('like');
+      const hasDislike = values.includes('dislike');
+
+      if (!hasLike || !hasDislike) {
+        isValid = false;
+        groupDiv.classList.add('invalid');
+      } else {
+        groupDiv.classList.remove('invalid');
+      }
+    });
+
+    if (!isValid) {
+      alert('⚠️ Pilih satu pernyataan yang Most Relevant dan satu pernyataan Least Relevant pada setiap kelompok pernyataan.');
+      return;
+    }
+
+    showResults(countRawResults());
+  }
+
+  document.getElementById('submitBtn').onclick = () => {
+    validateAndSubmit();
+  };
+  document.getElementById('testBtn').onclick = () => {
+    if (isDebugging()) {
+      showResults(debuggingProps.rawResults);
+    }
+  };
+  document.getElementById('warning-toggle').onclick = () => {
+    toggleWarning();
+  };
+  document.getElementById('info-toggle').onclick = () => {
+    toggleInfo();
+  };
+  
+  /* Processing the Results */
+  function countRawResults() {
+    let counts = {
+      D: { p: 0, k: 0 },
+      I: { p: 0, k: 0 },
+      S: { p: 0, k: 0 },
+      C: { p: 0, k: 0 }
+    };
+
+    for (const no in results) {
+      const answerItem = results[no];
+      for (const trait in answerItem) {
+
+        let profile;
+
+        if (groups['D'].includes(trait)) {
+          profile = 'D';
+        } else if (groups['I'].includes(trait)) {
+          profile = 'I';
+        } else if (groups['S'].includes(trait)) {
+          profile = 'S';
+        } else if (groups['C'].includes(trait)) {
+          profile = 'C';
+        }
+
+        if (answerItem[trait] == 'like') {
+          counts[profile]['p']++;
+        } else {
+          counts[profile]['k']++;
+        }
+      }
+    }
+
+    return counts;
+  }
+  function countVectorResults(arr1, arr2) {
+    // Check if arrays have the same length
+    if (arr1.length !== arr2.length) {
+      throw new Error("Arrays must have the same length for element-wise subtraction.");
+    }
+
+    const resultArray = [];
+    for (let i = 0; i < arr1.length; i++) {
+      resultArray.push(arr1[i] - arr2[i]);
+    }
+    return resultArray;
+  }
+  
+  const predicatesTranslation = {
+    'very-high': 'Sangat Tinggi',
+    'high': 'Tinggi',
+    'average': 'Rata-rata',
+    'low': 'Rendah',
+    'very-low': 'Sangat Rendah'
+  };
+  const predicatesFormula = {
+    1: {
+      'very-high': 'x >= 30',
+      'high': 'x > 15 && x < 30',
+      'average': 'x > 10 && x <= 15',
+      'low': 'x > 5 && x <= 10',
+      'very-low': 'x >= 0 && x <= 5',
+    },
+    2: {
+      'very-high': 'x >= 0 && x <= 5',
+      'high': 'x >= 6 && x <= 10',
+      'average': 'x >= 11 && x <= 15',
+      'low': 'x > 15 && x <= 30',
+      'very-low': 'x > 30',
+    },
+    3: {
+      'very-high': 'x >= 30',
+      'high': 'x >= 5 && x < 30',
+      'average': 'x >= -10 && x < 5',
+      'low': 'x >= -25 && x < -10',
+      'very-low': 'x < -25',
+    }
+  };
+  function calculateByFormula(no, resultCount, formula) {
+    // Define used rules and values
+    const rules = formula[no];
+    const values = resultCount;
+
+    // Convert rules into array of [label, function]
+    const compiledRules = Object.entries(rules).map(([label, condition]) => {
+      const fn = new Function('x', `return ${condition};`);
+      return [label, fn];
+    });
+
+    return values.map(val => {
+      for (const [label, fn] of compiledRules) {
+        if (fn(val)) return label;
+      }
+      return 'unknown'; // fallback if no rule matched
+    });
+  }
+  function renderPredicates(predicate) {
+    if (predicate == 'very-high') {
+      return `<em>(${predicatesTranslation[predicate]})</em>⬆️⬆️`;
+    } else if (predicate == 'high') {
+      return `<em>(${predicatesTranslation[predicate]})</em>⬆️`;
+    } else if (predicate == 'average') {
+      return `<em>(${predicatesTranslation[predicate]})</em>`;
+    } else if (predicate == 'low') {
+      return `<em>(${predicatesTranslation[predicate]})</em>⬇️`;
+    } else if (predicate == 'very-low') {
+      return `<em>(${predicatesTranslation[predicate]})</em>⬇️⬇️`;
+    }
+    return '';
+  }
+  function renderExplanation(no, resultCount) {
+    const predicateResults = calculateByFormula(no, resultCount, predicatesFormula);
+    const template = `
+      <div>
+        <table>
+          <tr>
+            <th>Dominance</th>
+            <td>:</td>
+            <td>${resultCount[0]}</td>
+            <td>${renderPredicates(predicateResults[0])}</td>
+          </tr>
+          <tr>
+            <th>Influence</th>
+            <td>:</td>
+            <td>${resultCount[1]}</td>
+            <td>${renderPredicates(predicateResults[1])}</td>
+          </tr>
+          <tr>
+            <th>Steadiness</th>
+            <td>:</td>
+            <td>${resultCount[2]}</td>
+            <td>${renderPredicates(predicateResults[2])}</td>
+          </tr>
+          <tr>
+            <th>Compliance</th>
+            <td>:</td>
+            <td>${resultCount[3]}</td>
+            <td>${renderPredicates(predicateResults[3])}</td>
+          </tr>
+        </table>
+      </div>
+    `;
+    document.getElementById(`graph${no}`).querySelector('.explanation').innerHTML = template;
+  }
+  function renderPromptHelper(pred1, pred2, pred3) {
+    const template = `Pada Test Extended DISC Profile, hasil yang saya dapatkan untuk setiap profile adalah sebagai berikut:
+1. Grafik 1: Masking (Persona/Adaptif) -> D: ${predicatesTranslation[pred1[0]]}, I: ${predicatesTranslation[pred1[1]]}, S: ${predicatesTranslation[pred1[2]]}, C: ${predicatesTranslation[pred1[3]]}
+2. Grafik 2: Core (Temperamen/Di bawah tekanan) -> D: ${predicatesTranslation[pred2[0]]}, I: ${predicatesTranslation[pred2[1]]}, S: ${predicatesTranslation[pred2[2]]}, C: ${predicatesTranslation[pred2[3]]}
+3. Grafik 3: Mirror (Karakter/Natural) -> D: ${predicatesTranslation[pred3[0]]}, I: ${predicatesTranslation[pred3[1]]}, S: ${predicatesTranslation[pred3[2]]}, C: ${predicatesTranslation[pred3[3]]}
+
+- Apa insight yang bisa saya dapatkan dari hasil pengujian tersebut?
+- Apakah relasi grafik 1, 2 dan 3 saya masih normal?
+- Berdasarkan hasil tersebut, berikan saran untuk pengembangan diri saya!`;
+
+    document.getElementById('info-content').innerHTML = `
+      <pre>${template}</pre>
+      <span style="color: red">Silakan copy prompt di atas ke AI Client favorit anda</span>
+      <button class="btn" data-clipboard-text="${template}">
+        Copy
+      </button>
+    `;    
+  }
+  
+  const graphPointsFormula = {
+    1: {
+      '0': 'x == 40',
+      '0-1': 'x > 35 && x < 40',
+      '1': 'x == 35',
+      '1-2': 'x > 30 && x < 35',
+      '2': 'x == 30',
+      '2-3': 'x > 25 && x < 30',
+      '3': 'x == 25',
+      '3-4': 'x > 20 && x < 25',
+      '4': 'x == 20',
+      '4-5': 'x == 19',
+      '5': 'x == 18',
+      '6': 'x == 17',
+      '7': 'x == 16',
+      '8': 'x == 15',
+      '8-9': 'x == 14',
+      '9': 'x == 13',
+      '10': 'x == 12',
+      '11': 'x == 11',
+      '12': 'x == 10',
+      '12-13': 'x == 9',
+      '13': 'x == 8',
+      '14': 'x == 7',
+      '15': 'x == 6',
+      '16': 'x == 5',
+      '17': 'x == 4',
+      '18': 'x == 3',
+      '19': 'x == 2',
+      '20': 'x == 1',
+      '21': 'x == 0',
+    },
+    2: {
+      '0': 'x == 0',
+      '0-1': 'x > 0 && x < 3',
+      '1': 'x == 3',
+      '2': 'x == 4',
+      '3': 'x == 5',
+      '4': 'x == 6',
+      '5': 'x == 7',
+      '6': 'x == 8',
+      '7': 'x == 9',
+      '8': 'x == 10',
+      '9': 'x == 11',
+      '10': 'x == 12',
+      '11': 'x == 13',
+      '12': 'x == 14',
+      '13': 'x == 15',
+      '13-14': 'x > 15 && x < 20',
+      '14': 'x == 20',
+      '14-15': 'x > 20 && x < 23',
+      '15': 'x == 23',
+      '15-16': 'x > 20 && x < 23',
+      '16': 'x == 25',
+      '16-17': 'x > 20 && x < 23',
+      '17': 'x == 30',
+      '17-18': 'x > 30 && x < 35',
+      '18': 'x == 35',
+      '18-19': 'x == 36',
+      '19': 'x == 37',
+      '19-20': 'x == 38',
+      '20': 'x == 39',
+      '21': 'x == 40',
+    },
+    3: {
+      '0': 'x == 40',
+      '0-1': 'x > 35 && x < 40',
+      '1': 'x == 35',
+      '1-2': 'x > 30 && x < 35',
+      '2': 'x == 30',
+      '2-3': 'x > 25 && x < 30',
+      '3': 'x == 25',
+      '3-4': 'x > 20 && x < 25',
+      '4': 'x == 20',
+      '4-5': 'x > 15 && x < 20',
+      '5': 'x == 15',
+      '5-6': 'x > 10 && x < 15',
+      '6': 'x == 10',
+      '6-7': 'x > 5 && x < 10',
+      '7': 'x == 5',
+      '7-8': 'x > 0 && x < 5',
+      '8': 'x == 0',
+      '8-9': 'x > -5 && x < 0',
+      '9': 'x == -5',
+      '10': 'x > -10 && x < -5',
+      '11': 'x == -10',
+      '11-12': 'x > -15 && x < -10',
+      '12': 'x == -15',
+      '12-13': 'x > -20 && x < -15',
+      '13': 'x == -20',
+      '14': 'x > -25 && x < -20',
+      '15': 'x == -25',
+      '16': 'x > -30 && x < -25',
+      '17': 'x == -30',
+      '18': 'x > -35 && x < -30',
+      '19': 'x == -35',
+      '20': 'x > -40 && x < -35',
+      '21': 'x == -40'
+    }
+  };
+  function calculateGraphPoint(no, resultCount) {
+
+    const pointResults = calculateByFormula(no, resultCount, graphPointsFormula);
+
+    let p = 'D';
+    let graphPoints = [];
+
+    for (let i = 0; i < pointResults.length; i++) {
+      if (i == 0) { p = 'D'; }
+      else if (i == 1) { p = 'I'; }
+      else if (i == 2) { p = 'S'; }
+      else if (i == 3) { p = 'C'; }
+
+      const point = pointResults[i];
+
+      if (point.includes('-')) {
+        const cells = point.split('-');
+        const cellId1 = `g${no}-${cells[0]}-${p}`;
+        const cellId2 = `g${no}-${cells[1]}-${p}`;
+        graphPoints[i] = { type: 'mid', id1: cellId1, id2: cellId2 }
+      } else {
+        const cellId = `g${no}-${point}-${p}`;
+        graphPoints[i] = { type: 'sel', id: cellId }
+      }
+    }
+
+    return graphPoints;
+  }
+  function getMidpoint(rect, cellA, cellB) {
+    const aRect = cellA.getBoundingClientRect();
+    const bRect = cellB.getBoundingClientRect();
+    return {
+      x: (aRect.left + bRect.left + aRect.width) / 2 - rect.left,
+      y: (aRect.top + bRect.top + aRect.height) / 2 - rect.top,
+    };
+  }
+  function renderGraph(no, resultCount) {
+    // Init Canvas
+    const table = document.getElementById(`table${no}`);
+    const canvas = document.getElementById(`canvas${no}`);
+    const rect = table.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    canvas.style.top = `${table.offsetTop}px`;
+    canvas.style.left = `${table.offsetLeft}px`;
+
+    const ctx = canvas.getContext('2d');
+    ctx.strokeStyle = 'blue';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+
+    // Get Coordinates
+    const points = calculateGraphPoint(no, resultCount);
+
+    // Draw the point and lines
+    points.forEach((point, index) => {
+      let x, y;
+      if (point.type === 'sel') {
+        const cell = document.getElementById(point.id);
+        const cellRect = cell.getBoundingClientRect();
+        x = cellRect.left - rect.left + cellRect.width / 2;
+        y = cellRect.top - rect.top + cellRect.height / 2;
+      } else if (point.type === 'mid') {
+        const cell1 = document.getElementById(point.id1);
+        const cell2 = document.getElementById(point.id2);
+        ({ x, y } = getMidpoint(rect, cell1, cell2));
+      }
+
+      // Draw dot
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      dot.style.left = `${x}px`;
+      dot.style.top = `${y}px`;
+      table.appendChild(dot);
+
+      // Draw line
+      if (index === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+
+    ctx.stroke();
+  }
+  function clearCanvas() {
+    const canvas1 = document.getElementById('canvas1');
+    canvas1.getContext('2d').clearRect(0, 0, canvas1.width, canvas1.height);
+    const canvas2 = document.getElementById('canvas2');
+    canvas2.getContext('2d').clearRect(0, 0, canvas2.width, canvas2.height);
+    const canvas3 = document.getElementById('canvas3');
+    canvas3.getContext('2d').clearRect(0, 0, canvas3.width, canvas3.height);
+
+    const elements = document.querySelectorAll('.dot');
+    elements.forEach(element => { element.remove(); });
+  }
+
+  function showResults(rawResults) {
+    clearCanvas();
+
+    resultModal.open('#resultModal');
+
+    // Graph 1
+    let result1 = [rawResults['D']['p'],rawResults['I']['p'],rawResults['S']['p'],rawResults['C']['p']];
+    renderExplanation(1, result1);
+    setTimeout(() => { renderGraph(1, result1); }, 500);
+
+    // Graph 2
+    let result2 = [rawResults['D']['k'],rawResults['I']['k'],rawResults['S']['k'],rawResults['C']['k']];
+    renderExplanation(2, result2);
+    setTimeout(() => { renderGraph(2, result2); }, 500);
+
+    // Graph 3
+    let result3 = countVectorResults(result1, result2);
+    renderExplanation(3, result3);
+    setTimeout(() => { renderGraph(3, result3); }, 500);
+
+    // Prompt Helper
+    const pred1 = calculateByFormula(1, result1, predicatesFormula);
+    const pred2 = calculateByFormula(2, result2, predicatesFormula);
+    const pred3 = calculateByFormula(3, result3, predicatesFormula);
+    renderPromptHelper(pred1, pred2, pred3);
+  }
+
+  /* Results Info */
+  function toggleWarning() {
+    const content = document.getElementById('warning-content');
+    const arrow = document.querySelector('#warning-toggle .arrow');
+    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+    arrow.classList.toggle('down');
+  }
+  function toggleInfo() {
+    const content = document.getElementById('info-content');
+    const arrow = document.querySelector('#info-toggle .arrow');
+    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+    arrow.classList.toggle('down');
+  }
+
+  /* On Start */
+  async function setup() {
+    // Load Forms
+    groups = await getQuestionGroups();
+    questions = await getQuestions();
+    renderQuestions(questions);
+
+    // Setup Clipboard
+    const clipboard = new ClipboardJS('.btn');
+    clipboard.on('success', function(e) {
+      e.trigger.innerHTML = 'Copied';
+      setTimeout(() => { e.trigger.innerHTML = 'Copy'; }, 1000);
+    });
+
+    // Debugging mode
+    if (isDebugging()) {
+      document.getElementById('testBtn').style.display = 'block';
+    }
+  }
+
+  setup();
+})();
+</script>
+
+</body>
+</html>
+
+<!-- TODO -->
+<!-- ✅ 1. render graph -->
+<!-- ✅ 2. render explanation -->
+<!-- ✅ 3. make sure no typo in json -->
+<!-- ✅ 4. create testcase -->
+<!-- ✅ 5. add more insight result -->
+<!-- ✅ 6. autosave in localstorage -->
