@@ -150,6 +150,11 @@
       padding-top: 24px;
       border-radius: 10px;
     }
+    @media screen and (max-width: 768px) {
+      .hystmodal__window {
+        padding: 16px;
+      }
+    }
     .hystmodal__window.hystmodal__window--long {
       width: 1000px;
     }
@@ -197,6 +202,7 @@
       width: 100%;
       font-size: 16px;
       padding: 0;
+      text-align: left;
     }
     .warning-content, .info-content {
       margin-top: 10px;
@@ -224,6 +230,7 @@
   <script src="./hystmodal.min.js"></script>
   <script src="./clipboard.min.js"></script>
   <link rel="stylesheet" href="./hystmodal.min.css">
+  <link rel="stylesheet" href="./gh-fork-ribbon.min.css" />
 </head>
 <body>
 
@@ -279,7 +286,7 @@
 
       <div class="warning-box">
         <button id="warning-toggle">
-          ⚠️ Bagaimana jika terdapat perbedaan pada Hasil Grafik?
+          <span>⚠️ Bagaimana jika terdapat perbedaan pada Hasil Grafik?</span>
           <span class="arrow rotate down">▶</span>
         </button>
         <div id="warning-content" class="warning-content">
@@ -298,7 +305,7 @@
       
       <div class="info-box">
         <button id="info-toggle">
-          ❓ Dapatkan lebih banyak Insight
+          <span>❓ Dapatkan lebih banyak Insight</span>
           <span class="arrow rotate down">▶</span>
         </button>
         <div id="info-content" class="info-content"></div>
@@ -780,6 +787,8 @@
     </div>
   </div> 
 </div>
+
+<a class="github-fork-ribbon" href="https://github.com/rmdwirizki/disc-test" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a> 
 
 <script>
 /* Debounce helper */
